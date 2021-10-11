@@ -11,6 +11,6 @@ log = logging.getLogger(__name__)
 
 def match_name(name: str) -> typing.Optional[MidiDriver]:
     if name.startswith("Akai MPD18"):
-        return MidiDriver("drumpad", False, True)
+        return MidiDriver("drumpad", False, True, None)
 
 
