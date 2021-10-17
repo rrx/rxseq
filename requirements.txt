@@ -1,0 +1,4 @@
+pyfluidsynth
+pyudev
+pyusb
+pynput
