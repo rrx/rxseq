@@ -11,14 +11,20 @@ log = logging.getLogger(__name__)
 
 class App:
     def __init__(self):
-        self.fs = fluidsynth.Synth()
-        self.fs.start(driver='pulseaudio')
+        fs = fluidsynth.Synth()
+        fs.setting('audio.period-size', 64)
+        fs.setting('audio.periods', 3)
+        fs.setting('synth.chorus.active', False)
+        fs.setting('synth.reverb.active', False)
         sf = "/usr/share/sounds/sf2/FluidR3_GM.sf2"
-        self.sfid = self.fs.sfload(sf)
+        self.sfid = fs.sfload(sf)
         # create channels on synth
-        self.fs.program_select(0, self.sfid, 0, 114)
-        self.fs.program_select(1, self.sfid, 0, 0)
-        self.fs.program_select(2, self.sfid, 0, 109)
+        fs.program_select(0, self.sfid, 0, 114)
+        fs.program_select(1, self.sfid, 0, 0)
+        fs.program_select(2, self.sfid, 0, 109)
+
+        self.fs = fs
+        self.fs.start(driver='alsa')
 
     def event(self, e):
         status = e.get('status')
